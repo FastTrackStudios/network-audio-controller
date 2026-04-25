@@ -138,6 +138,8 @@ class DanteARCService(DanteUnicastService):
                 if rx_channels:
                     device.rx_channels = rx_channels
                     device.subscriptions = subscriptions
+                    import sys
+                    print(f"DEBUG rx_channels populated: {len(rx_channels)} channels for rx_count={device.rx_count}", file=sys.stderr)
 
             # if getattr(device, "model_id", None) in HEARTBEAT_LOCK_UNRELIABLE_MODEL_IDS:
             #     lock_state = await self.probe_lock_state(device_ip, arc_port)

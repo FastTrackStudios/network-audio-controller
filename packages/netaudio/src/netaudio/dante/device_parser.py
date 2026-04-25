@@ -111,6 +111,8 @@ class DanteDeviceParser:
     async def get_rx_channels(self, device, dante_command_func):
         rx_channels = {}
         subscriptions = []
+        import sys
+        print(f"DEBUG get_rx_channels: called with rx_count={device.rx_count}", file=sys.stderr)
 
         try:
             for page in range(0, max(int((device.rx_count or 0) / 16), 1)):
