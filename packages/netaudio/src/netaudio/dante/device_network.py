@@ -84,6 +84,8 @@ class DanteDeviceNetwork:
                     self.device.rx_count_raw = self.device.rx_count = int.from_bytes(
                         channel_count_response[14:16], "big"
                     )
+                    import sys
+                    print(f"DEBUG device_network: tx={self.device.tx_count}, rx={self.device.rx_count}", file=sys.stderr)
                 else:
                     logger.debug("Failed to get Dante channel counts")
 
