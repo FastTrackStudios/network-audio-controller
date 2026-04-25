@@ -50,8 +50,11 @@ class DanteARCService(DanteUnicastService):
             logical_command_name="get_channel_count",
         )
         if response and len(response) >= 16:
-            tx_count = int.from_bytes(response[13:14], "big")
-            rx_count = int.from_bytes(response[15:16], "big")
+            # The channel-count response stores 16-bit counts in the payload body.
+            # Byte offsets here are relative to the full packet, so tx/rx are the
+            # two-byte fields at 12:14 and 14:16 respectively.
+            tx_count = int.from_bytes(response[12:14], "big")
+            rx_count = int.from_bytes(response[14:16], "big")
             lock_status = None
             if len(response) >= 36:
                 lock_field = int.from_bytes(response[34:36], "big")

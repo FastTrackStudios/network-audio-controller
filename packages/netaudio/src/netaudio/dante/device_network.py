@@ -77,11 +77,12 @@ class DanteDeviceNetwork:
                     *channel_count_args, logical_command_name="get_channel_count"
                 )
                 if channel_count_response:
-                    self.device.rx_count_raw = self.device.rx_count = int.from_bytes(
-                        channel_count_response[15:16], "big"
-                    )
+                    # The count fields are 16-bit values in the packet body.
                     self.device.tx_count_raw = self.device.tx_count = int.from_bytes(
-                        channel_count_response[13:14], "big"
+                        channel_count_response[12:14], "big"
+                    )
+                    self.device.rx_count_raw = self.device.rx_count = int.from_bytes(
+                        channel_count_response[14:16], "big"
                     )
                 else:
                     logger.debug("Failed to get Dante channel counts")

@@ -186,8 +186,9 @@ class DanteDeviceParser:
                     subscriptions.append(subscription)
                     channels_this_page += 1
 
-                if channels_this_page < 16:
-                    break
+                # Some devices return shorter RX pages early in the range and
+                # fuller pages later. Do not stop after the first short page;
+                # keep walking all page slots implied by rx_count.
         except Exception as e:
             device.error = e
             print(e)
