@@ -136,8 +136,10 @@ class DanteDeviceParser:
 
                     channel_number = struct.unpack(">H", record[0:2])[0]
                     expected = (page * 16) + index + 1
-                    if channel_number == 0 or channel_number != expected:
-                        break
+                    if channel_number == 0:
+                        continue
+                    if channel_number != expected:
+                        continue
 
                     tx_channel_offset = struct.unpack(">H", record[6:8])[0]
                     tx_device_offset = struct.unpack(">H", record[8:10])[0]
