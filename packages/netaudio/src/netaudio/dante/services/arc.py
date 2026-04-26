@@ -52,8 +52,6 @@ class DanteARCService(DanteUnicastService):
         if response and len(response) >= 16:
             tx_count = int.from_bytes(response[12:14], "big")
             rx_count = int.from_bytes(response[14:16], "big")
-            import sys
-            print(f"DEBUG get_channel_count: response[12:14]={response[12:14].hex()}->{tx_count}, [14:16]={response[14:16].hex()}->{rx_count}", file=sys.stderr)
             lock_status = None
             if len(response) >= 36:
                 lock_field = int.from_bytes(response[34:36], "big")
@@ -138,8 +136,6 @@ class DanteARCService(DanteUnicastService):
                 if rx_channels:
                     device.rx_channels = rx_channels
                     device.subscriptions = subscriptions
-                    import sys
-                    print(f"DEBUG rx_channels populated: {len(rx_channels)} channels for rx_count={device.rx_count}", file=sys.stderr)
 
             # if getattr(device, "model_id", None) in HEARTBEAT_LOCK_UNRELIABLE_MODEL_IDS:
             #     lock_state = await self.probe_lock_state(device_ip, arc_port)
