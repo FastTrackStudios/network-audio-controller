@@ -54,9 +54,7 @@ class DanteDeviceCommands:
 
     def command_receivers(self, page=0, transaction_id=0):
         starting_channel = page * 16 + 1
-        # Inferno reads starting_channel from bytes 2-3 of the payload; real Dante
-        # devices read it from bytes 4-5. Duplicate it in both positions so both work.
-        payload = struct.pack(">HHHH", 0, starting_channel, starting_channel, 0)
+        payload = struct.pack(">HHHH", 0, 0, starting_channel, 0)
         return (self._build_control_packet(OPCODE_RX_CHANNELS, payload, transaction_id=transaction_id), SERVICE_ARC)
 
     def command_transmitters(self, page=0, friendly_names=False):
